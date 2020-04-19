@@ -11,6 +11,8 @@ local drawable_names = {"face", "masks", "hair", "torsos", "legs", "bags", "shoe
 local head_overlays = {"bl","fch","eyebrownhead","ageing","Makeup","Blush","Complexion","SunDamage","Lipstick","moles","chesthair","bodybl","addbodybl"}
 local face_features = {"nosew","peaknose","lengthnose","nosehigh","noselowering","nosetwist","eyebrow","eyebrow2","cheeck1","cheeck2","cheeck3","eye1","lip1","jaw1","jaw2","chimp1","chimp2","chimp3","chimp4","neck"}
 
+cAPI.playerSpawned = false
+
 AddEventHandler(
 	"playerSpawned",
 	function()
@@ -35,11 +37,10 @@ Citizen.CreateThread(
 	end
 )
 
-
 Citizen.CreateThread(function()
     while true do
-        local playerPed = PlayerPedId()
-        if playerPed and playerPed ~= -1 then
+		local playerPed = PlayerPedId()
+		if playerPed and playerPed ~= -1 and cAPI.playerSpawned then
         	TriggerServerEvent('updatePosOnServerForPlayer', { table.unpack(GetEntityCoords(playerPed)) })
         end
         Citizen.Wait(5000)
@@ -58,6 +59,7 @@ end
 function cAPI.teleportSpawn(coordinate)
 	local coords = json.decode(coordinate)
 	cAPI.CameraWithSpawnEffect(coords)
+	cAPI.playerSpawned = true
 	--SetEntityCoords(PlayerPedId(), coords.x + 0.0001, coords.y + 0.0001, coords.z + 0.0001, 1, 0, 0, 1)
 end
 

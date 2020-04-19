@@ -14,7 +14,7 @@ CK-Framework has its own [Official Discord](https://discord.io/ckframework).
 #### Installing
 
 -   Clone this repository from github.
--   Import the database to your MariaDB
+-   Import the database `resources/DB.sql` to your MariaDB
 -   Change `GHMattiMySQL/settings.xml` to your connection database and `_core/server/database.lua`
 -   After this steps, only put online and go work in your scripts
 

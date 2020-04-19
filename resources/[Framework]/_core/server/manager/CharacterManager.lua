@@ -14,7 +14,9 @@ serverPositions	= {}
 
 RegisterServerEvent('updatePosOnServerForPlayer')
 AddEventHandler('updatePosOnServerForPlayer', function(newpos)
-	serverPositions[source] = newpos
+    local User = API.getUserFromSource(source)
+    serverPositions[source] = newpos
+    User:saveCharacter()
 end)
 
 function API.unloadPosForPlayer(source)
