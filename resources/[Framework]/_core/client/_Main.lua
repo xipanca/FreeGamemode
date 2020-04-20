@@ -580,7 +580,6 @@ end
 
 function cAPI.createCamera()
 	local ped = PlayerPedId()
-	SetEntityCoords(ped, 500.02, 500.02, 250.93) -- POSITION WHEN PLAYER IS CREATING/SELECTING
 	FreezeEntityPosition(GetPlayerPed(-1), true)
 	SetEntityVisible(PlayerPedId(),false)
     SetTimecycleModifier('Base_modifier')
@@ -593,16 +592,16 @@ function cAPI.createCamera()
 end
 
 function cAPI.destroyCamera()
-	DestroyCam(cam, true)
 	DestroyAllCams(true)
 	Citizen.Wait(500)
+	FreezeEntityPosition(GetPlayerPed(-1), false)
+	SetEntityVisible(PlayerPedId(),true)
 	DisplayHud(true)
 	DisplayRadar(true)	
 end
 
 function cAPI.CameraWithSpawnEffect(coords)
-	DestroyCam(cam, true)
-	Citizen.Wait(100)
+    cAPI.destroyCamera()
 	cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", coords.x+200,coords.y+200,coords.z+200, 300.00,0.00,0.00, 100.00, false, 0) -- CAMERA COORDS
 	PointCamAtCoord(cam, coords.x,coords.y,coords.z+200)
 	SetCamActive(cam, true)

@@ -28,7 +28,6 @@ end)
 
 RegisterServerEvent('CKF_identity:selectCharacter')
 AddEventHandler('CKF_identity:selectCharacter', function(cid) 
-    print('server  selectcharacter')
     local _source = source
     local User = API.getUserFromSource(_source) 
     User:setCharacter(cid) 

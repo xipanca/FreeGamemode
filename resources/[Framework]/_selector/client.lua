@@ -9,7 +9,7 @@ ped = PlayerPedId()
 
 RegisterNetEvent('CKF_identity:charList')
 AddEventHandler('CKF_identity:charList', function(characters)
-    --cAPI.createCamera()
+    cAPI.createCamera()
     SendNUIMessage({type = 2}) -- clear UI
     Wait(1000)
     SetNuiFocus(true, true)
@@ -20,6 +20,7 @@ AddEventHandler('CKF_identity:charList', function(characters)
 end)
 
 RegisterNUICallback('createCharacter', function()
+    cAPI.destroyCamera()
     SetNuiFocus(false, false)
     TriggerEvent('CKF_creator:createCharacter')
 end)
