@@ -173,7 +173,7 @@ DELIMITER ;
 -- Copiando estrutura para tabela CKF.users
 CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `identifier` varchar(21) NOT NULL,
+  `identifier` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
   `banned` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`user_id`),
@@ -186,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Copiando estrutura para tabela CKF.whitelist
 CREATE TABLE IF NOT EXISTS `whitelist` (
   `id` int(11) NOT NULL,
-  `identifier` varchar(21) NOT NULL,
+  `identifier` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `identifier` (`identifier`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
