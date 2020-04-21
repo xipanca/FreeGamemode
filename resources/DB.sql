@@ -145,6 +145,8 @@ BEGIN
 		UPDATE characters SET clothes = JSON_REMOVE(clothes, CONCAT("$.", chave)) WHERE charid = id;
 	ELSEIF (typeData = 'charTable') THEN
 		UPDATE characters SET charTable = JSON_REMOVE(charTable, CONCAT("$.", chave)) WHERE charid = id;
+	ELSEIF (typeData = 'skin') THEN
+		UPDATE characters SET skin = JSON_REMOVE(skin, CONCAT("$.", chave)) WHERE charid = id;
 	END IF;
 END//
 DELIMITER ;
