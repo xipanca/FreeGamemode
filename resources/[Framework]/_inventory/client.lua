@@ -60,7 +60,7 @@ function Inventory.showInventory(items) -- this functions is on show inventory N
     })     
 end
 
-function Inventory.updateItems(items) -- this functions is on show inventory NUI
+function Inventory.updateItems(items)
     SetNuiFocus(true, false)
     SetNuiFocusKeepInput(true)
     SendNUIMessage({
@@ -84,4 +84,8 @@ end
 -------------------------------------------------
 RegisterNUICallback('_inventoryClose', function()
     Inventory.closeInventory()
+end)
+
+RegisterNUICallback('buttonsClicked', function(data)
+    TriggerServerEvent('_inventory:funcItem', data)
 end)

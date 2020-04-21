@@ -14,10 +14,51 @@ function API.getItemDataFromName(name)
     return defaultItemData
 end
 
+function API.useItem(source, id, amount)
+    local User = API.getUserFromSource(source)
+    local ItemData = API.getItemDataFromId(id)
+
+    if ItemData:getType() == "weapon" then
+        local uWeapons = cAPI.getWeapons(source)
+        if uWeapons[ItemData:getId():upper()] then
+            User:notify('Arma já está equipada')
+            return false
+        end
+        Citizen.CreateThread(
+            function()
+                User:giveWeapon(id, 0)
+            end
+        )
+        return true
+    elseif ItemData:getType() == "ammo" then
+        local uWeapons = cAPI.getWeapons(source)
+        local formattedId = ItemData:getId():gsub('ammo_', ''):upper()
+
+        if uWeapons[formattedId] == nil then
+            User:notify('Nenhuma arma equipada suporta este tipo de munição!')
+            return false
+        end
+        local equipedAmmo = uWeapons[formattedId]
+
+        Citizen.CreateThread(
+            function()
+                User:giveWeapon(formattedId, equipedAmmo + amount)
+            end
+        )
+        return true
+    elseif ItemData:getType() == "food" then
+        local hungerVar = ItemData:getHungerVar()
+        API.varyHunger(source, hungerVar)
+    elseif ItemData:getType() == "beverage" then
+        local thirstVar = ItemData:getThirstVar()
+        API.varyThirst(source, thirstVar)
+    end 
+end
+
 Citizen.CreateThread(
     function()
         for id, values in pairs(ItemList) do
-            local ItemData = API.ItemData(id, values.name, values.weight or 0.1, values.subtitle, values.type)
+            local ItemData = API.ItemData(id, values.name, values.weight or 0.1, values.subtitle, values.type, values.hungerVar, values.thirstVar)
 
             if id:find('weapon_') then
                 ItemData:onUse(

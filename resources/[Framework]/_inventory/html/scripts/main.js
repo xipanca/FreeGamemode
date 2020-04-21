@@ -554,6 +554,21 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-slide-up-down/dist/vue-slide-up-down.m.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/vue-slide-up-down/dist/vue-slide-up-down.m.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({name:"SlideUpDown",props:{active:Boolean,duration:{type:Number,default:500},tag:{type:String,default:"div"},useHidden:{type:Boolean,default:!0}},data:function(){return{style:{},initial:!1,hidden:!1}},watch:{active:function(){this.layout()}},render:function(t){return t(this.tag,{style:this.style,attrs:this.attrs,ref:"container",on:{transitionend:this.onTransitionEnd}},this.$slots.default)},mounted:function(){this.layout(),this.initial=!0},created:function(){this.hidden=!this.active},computed:{el:function(){return this.$refs.container},attrs:function(){var t={"aria-hidden":!this.active,"aria-expanded":this.active};return this.useHidden&&(t.hidden=this.hidden),t}},methods:{layout:function(){var t=this;this.active?(this.hidden=!1,this.$emit("open-start"),this.initial&&this.setHeight("0px",function(){return t.el.scrollHeight+"px"})):(this.$emit("close-start"),this.setHeight(this.el.scrollHeight+"px",function(){return"0px"}))},asap:function(t){this.initial?this.$nextTick(t):t()},setHeight:function(t,i){var e=this;this.style={height:t},this.asap(function(){e.__=e.el.scrollHeight,e.style={height:i(),overflow:"hidden","transition-property":"height","transition-duration":e.duration+"ms"}})},onTransitionEnd:function(t){t.target===this.el&&(this.active?(this.style={},this.$emit("open-end")):(this.style={height:"0",overflow:"hidden"},this.hidden=!0,this.$emit("close-end")))}}});
+//# sourceMappingURL=vue-slide-up-down.m.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/vue/dist/vue.common.dev.js":
 /*!*************************************************!*\
   !*** ./node_modules/vue/dist/vue.common.dev.js ***!
@@ -12608,6 +12623,7 @@ window.onload = function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_dist_vue_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue/dist/vue.common */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue_dist_vue_common__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_dist_vue_common__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_slide_up_down__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-slide-up-down */ "./node_modules/vue-slide-up-down/dist/vue-slide-up-down.m.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -12621,6 +12637,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -12640,6 +12657,9 @@ function () {
     value: function initScript() {
       window.vm = new vue_dist_vue_common__WEBPACK_IMPORTED_MODULE_0___default.a({
         el: "#sinventory",
+        components: {
+          VueSlideUpDown: vue_slide_up_down__WEBPACK_IMPORTED_MODULE_1__["default"]
+        },
         data: {
           hoverSelectedPrimary: null,
           selectedPrimary: null,
@@ -12648,8 +12668,9 @@ function () {
           showInventory: false,
           primaryItemsObject: {},
           primaryItemsArray: [],
-          amountToOutput: 0,
-          tabSelected: 'todos'
+          amountToOutput: 1,
+          tabSelected: 'todos',
+          caracteresInvalido: ["e", "-", "+", "."]
         },
         methods: {
           display: function display(bool) {
@@ -12693,6 +12714,15 @@ function () {
               });
             }
           },
+          maxAmount: function maxAmount(fName) {
+            for (var i = 0; i < this.primaryItemsArray.length; i++) {
+              if (this.primaryItemsArray[i].fName == fName) {
+                return this.primaryItemsArray[i].amount;
+              }
+            }
+
+            return 0;
+          },
           UpdateButton: function UpdateButton(button) {
             this.tabSelected = button;
           },
@@ -12702,11 +12732,31 @@ function () {
             this.hoverSelectedSecondary = null;
             this.selectedSecondary = null;
           },
-          useItem: function useItem() {
+          buttonsClick: function buttonsClick(Tipo) {
             var ItemName = this.selectedPrimary;
+            var Quantidade = this.amountToOutput;
+
+            if (this.checkInput()) {
+              $.post("http://_inventory/buttonsClicked", JSON.stringify({
+                Tipo: Tipo,
+                ItemName: ItemName,
+                Quantidade: Quantidade
+              }));
+            }
           },
-          sendItem: function sendItem() {},
-          dropItem: function dropItem() {}
+          checkActive: function checkActive() {
+            if (this.selectedPrimary) return true;
+            return false;
+          },
+          checkInput: function checkInput() {
+            if (this.amountToOutput > this.maxAmount(this.selectedPrimary)) {
+              this.amountToOutput = 1;
+              return;
+            }
+
+            if (this.amountToOutput == 0) this.amountToOutput = 1;
+            return true;
+          }
         },
         mounted: function mounted() {},
         created: function created() {}

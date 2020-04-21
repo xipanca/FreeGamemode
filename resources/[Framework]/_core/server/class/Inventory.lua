@@ -129,6 +129,7 @@ function API.Inventory(id, capacity, items)
                     --    _temp,
                     --    ItemData:getName()
                     --)
+                    TriggerClientEvent("_inventory:updateItems", viewerSource, self:updateItem())
                     User:notify("Inventário Principal: - x" .. amount .. " " .. ItemData:getName())
                 else
                     --TriggerClientEvent(
@@ -209,6 +210,14 @@ function API.Inventory(id, capacity, items)
             {id = self:getId(), charid = self:getCharId(), itemName = 0, itemCount = 0, typeInv = "deadPlayer"}
         )
         self.items = nil
+    end
+
+    self.useItem = function(this, source, id, amount)
+        if not self:hasItem(id) then return end
+        if self:getItemAmount(id) < parseInt(amount) then  return end
+        if API.useItem(source, id, parseInt(amount)) then
+            self:removeItem(id, parseInt(amount))
+        end
     end
 
     return self

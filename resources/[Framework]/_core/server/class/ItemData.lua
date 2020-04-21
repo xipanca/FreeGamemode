@@ -1,4 +1,4 @@
-function API.ItemData(id, name, weight, subTitle, type)
+function API.ItemData(id, name, weight, subTitle, type, hungerVar, thirstVar)
     local self = {}
 
     self.id = id
@@ -6,6 +6,8 @@ function API.ItemData(id, name, weight, subTitle, type)
     self.weight = weight
     self.type = type
     self.subTitle = subTitle or "NULL"
+    self.hungerVar = hungerVar or 0
+    self.thirstVar = thirstVar or 0
     -- self.worldModel = 'default_prop'
 
     self.getId = function()
@@ -26,6 +28,14 @@ function API.ItemData(id, name, weight, subTitle, type)
 
     self.getType = function()
         return self.type
+    end
+
+    self.getHungerVar = function()
+        return self.hungerVar
+    end
+
+    self.getThirstVar = function()
+        return self.thirstVar
     end
 
     -- # Caso queria fazer um ItemDrop com um prop
