@@ -95,11 +95,14 @@ function API.dropPlayer(source, reason)
     if User then
         local user_id = User:getId()
         local steamID = GetPlayerIdentifiers(source)[1]
+        if User:getCharacter() then
+            User:saveCharacter()
+        end
         API.users[user_id] = nil
         API.sources[source] = nil
         API.identifiers[steamID] = nil
         print(GetPlayerName(source) .. " (" .. User:getIpAddress() .. ") desconectou (motivo = " .. reason .. ")")
-        User:saveCharacter()
+        
     end
 end
 
