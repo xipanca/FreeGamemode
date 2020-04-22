@@ -14,7 +14,7 @@
 <body id="body">
 	<div class="contain">		
 		<div id="head">
-			<div class="header-text">❯   PERSONAGENS</div>
+			<div class="header-text">❯ PERSONAGENS</div>
 			<div id="main">
 			</div>
 			<div class='line'></div>
@@ -34,7 +34,7 @@
 		function loadCharacters(list) {
 			$("body").slideDown();			
 			$(".contain").slideDown();
-			if (list != undefined || list == null) {
+			if (list) {
 				main.innerHTML = "";
 				var free = list.length;
 				var set = false;
@@ -49,10 +49,10 @@
 							'</div><div class="buttons"><div class="b1"><button class="create" onclick="select(' + chid + ')"><i class="fas fa-play"></i><span class="name" style="padding-left: 0.2vw;"> Play</span></button></div><div class="b2"><button class="delete" onclick="delet(' + chid + ')"><i class="fas fa-minus-square"></i><span class="name" style="padding-left: 0.2vw;"> Deletar</span></button></div></div></div></div>';
 				}
 				if (list.length < 2) {
-					main.innerHTML += '<button class="createnew" onclick="createNewCharacter()">CRIAR UM NOVO PERSONAGEM</button>'
+					main.innerHTML += '<button class="createnew" onclick="createNewCharacter()">CRIAR PERSONAGEM</button>'
 				}
 			} else {
-				main.innerHTML = '<button class="createnew" onclick="createNewCharacter()">CRIAR UM NOVO PERSONAGEM</button>'
+				main.innerHTML = '<button class="createnew" onclick="createNewCharacter()">CRIAR PERSONAGEM</button>'
 			}
 		}
 
