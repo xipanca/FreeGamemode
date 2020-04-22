@@ -22,6 +22,7 @@ server_scripts {
 	'config/XPSystem.lua',
 	'config/Chests.lua',
 	'config/Permissions.lua',
+	'config/Language.lua',
 	---------------------
 	'server/Database.lua',
 	'server/_Main.lua',

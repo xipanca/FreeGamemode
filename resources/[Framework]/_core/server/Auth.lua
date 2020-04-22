@@ -26,25 +26,25 @@ AddEventHandler(
         local ids = GetPlayerIdentifiers(_source)
 
         if ids[1] == nil then
-            deferrals.done('Abra a Steam.')
+            deferrals.done(Language[GameLanguage].NO_STEAM)
             CancelEvent()
             return
         end
 
         if LoginCooldown[ids[1]] == nil then
-            deferrals.update('Verificando sua whitelist...')
+            deferrals.update(Language[GameLanguage].CHECK_WHITELIST)
             if API.isWhitelisted(ids[1]) then
                 local user_id = API.getUserIdByIdentifiers(ids, playerName)
                 if user_id then
-                    deferrals.update('Checando lista de banimentos...')
+                    deferrals.update(Language[GameLanguage].CHECK_BANLIST)
                     if API.isBanned(user_id) == 0 then
                         if API.users[user_id] == nil then
-                            deferrals.update('Tudo encontrado, carregando seus dados...')
+                            deferrals.update(Language[GameLanguage].JOIN_PERMITTED)
                             API.onFirstSpawn[user_id] = true
                             deferrals.done()
                         end
                     else
-                        deferrals.done('Você está banido do servidor.')
+                        deferrals.done(Language[GameLanguage].BANNED)
                         CancelEvent()
                     end
                 end
@@ -58,12 +58,12 @@ AddEventHandler(
                     end
                 )
 
-                print(playerName .. ' (' .. ids[1] .. ') tentou conectar sem whitelist')
-                deferrals.done('Você não está permitido para entrar no servidor. HEX: ' .. ids[1])
+                print(playerName .. ' (' .. ids[1] .. ') ' .. Language[GameLanguage].NO_WHITELIST)
+                deferrals.done(Language[GameLanguage].DONT_PERMITTED ..' '.. ids[1])
                 CancelEvent()
             end
         else
-            deferrals.done('Aguarde um minuto para ser removido da lista de não-whitelist.')
+            deferrals.done(Language[GameLanguage].AUTO_QUEUEWL)
         end
     end
 )
