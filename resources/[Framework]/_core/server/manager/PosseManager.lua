@@ -8,7 +8,6 @@ function API.createPosse(charid, name)
         [charid] = 1, 
         [teste] = 0,
     }   
-    print(json.encode(members))
  --[[
     for k, v in pairs(members) do
         if v == 1 then
@@ -35,7 +34,6 @@ function API.getPosse(id)
                 
                 local Posse = API.Posse(id, rows[1].charid, rows[1].name, json.decode(rows[1].members))                
                 posses[id] = Posse
-                print(Posse)
                 return Posse
             end
         end

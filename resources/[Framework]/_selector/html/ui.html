@@ -34,7 +34,7 @@
 		function loadCharacters(list) {
 			$("body").slideDown();			
 			$(".contain").slideDown();
-			if (list != undefined) {
+			if (list != undefined || list == null) {
 				main.innerHTML = "";
 				var free = list.length;
 				var set = false;
@@ -47,13 +47,10 @@
 					}
 					main.innerHTML += '<div class="char"><header><img src="img/ps.png" id="mugshot" width="119px"></header><div class="content"><div class="fname">' + char.characterName + '</div><div class="job">' + char.characterJob + '</div><div class="money">R$' + char.getMoney + '</div>'  +
 							'</div><div class="buttons"><div class="b1"><button class="create" onclick="select(' + chid + ')"><i class="fas fa-play"></i><span class="name" style="padding-left: 0.2vw;"> Play</span></button></div><div class="b2"><button class="delete" onclick="delet(' + chid + ')"><i class="fas fa-minus-square"></i><span class="name" style="padding-left: 0.2vw;"> Deletar</span></button></div></div></div></div>';
-												
-					}
-
+				}
 				if (list.length < 2) {
 					main.innerHTML += '<button class="createnew" onclick="createNewCharacter()">CRIAR UM NOVO PERSONAGEM</button>'
 				}
-
 			} else {
 				main.innerHTML = '<button class="createnew" onclick="createNewCharacter()">CRIAR UM NOVO PERSONAGEM</button>'
 			}

@@ -41,7 +41,6 @@ function API.User(source, id, ipAddress)
 
 
     self.createCharacter = function(this, characterName, age, saves, clothes)
-        print('sel')
         local Character = nil
         local rows = API_Database.query('CKF_/CreateCharacter', {user_id = self:getId(), charName = characterName, charAge = age, charSkin = saves, clothes = clothes })
         if #rows > 0 then

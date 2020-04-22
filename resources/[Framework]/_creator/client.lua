@@ -249,7 +249,6 @@ end)
 RegisterNUICallback('ChangeClothes', function(data)
     local ped = PlayerPedId()
     if data.changeJacket then
-        print(tonumber(data.id))
         SetPedComponentVariation(ped, 11, tonumber(data.id), tonumber(data.texture), tonumber(data.texture))
     end
     if data.changeShirt then
