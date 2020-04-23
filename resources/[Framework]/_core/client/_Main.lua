@@ -505,13 +505,13 @@ function cAPI.teleportToWaypoint()
 	SetEntityCoordsNoOffset(ped, x, y, z, 0, 0, 1)
 end
 
-function cAPI.playAnim(dict, anim, speed)
+function cAPI.playAnim(dict, anim, speed, flag)
 	if not IsEntityPlayingAnim(PlayerPedId(), dict, anim) then
 		RequestAnimDict(dict)
 		while not HasAnimDictLoaded(dict) do
 			Citizen.Wait(100)
 		end
-		TaskPlayAnim(PlayerPedId(), dict, anim, speed, 1.0, -1, 0, 0, 0, 0, 0, 0, 0)
+		TaskPlayAnim(PlayerPedId(), dict, anim, speed, 1.0, -1, 0, 0, flag, 0, 0, 0, 0)
 	end
 end
 
